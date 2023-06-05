@@ -10,7 +10,7 @@ import	org.springframework.stereotype.Repository;
 import	com.project4.ACSchapter6.shoppingapi.model.Shop;
 
 @Repository
-public interface ShopRepository extends JpaRepository<Shop, Long>{
+public interface ShopRepository extends JpaRepository<Shop, Long>, ReportRepository{
     public List<Shop> findAllByUserIdentifier(String userIdentifier);
     public List<Shop> findAllByTotalGreaterThan(Float total);
     public List<Shop> findAllByDateGreaterThan(LocalDateTime date);

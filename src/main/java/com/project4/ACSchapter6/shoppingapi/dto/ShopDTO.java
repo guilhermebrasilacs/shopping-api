@@ -30,6 +30,6 @@ public class ShopDTO {
         shopDTO.setUserIdentifier(shop.getUserIdentifier());
         shopDTO.setTotal(shop.getTotal());
         shopDTO.setDate(shop.getDate());
-        return  shopDTO;
+        return shopDTO;
     }
 }

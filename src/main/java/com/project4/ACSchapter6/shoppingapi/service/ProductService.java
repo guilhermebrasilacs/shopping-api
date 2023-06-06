@@ -1,5 +1,6 @@
 package com.project4.ACSchapter6.shoppingapi.service;
 
+import com.project5.ACSchapter8.shoppingclient.exception.ProductNotFoundException;
 import	org.springframework.beans.factory.annotation.Value;
 import	org.springframework.stereotype.Service;
 
@@ -19,7 +20,7 @@ public class ProductService {
 
             return product.block();
         } catch(Exception e){
-            throw new RuntimeException("Product not found");
+            throw new ProductNotFoundException();
         }
     }
 }

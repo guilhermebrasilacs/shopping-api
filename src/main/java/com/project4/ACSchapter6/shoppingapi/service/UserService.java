@@ -1,5 +1,6 @@
 package com.project4.ACSchapter6.shoppingapi.service;
 
+import com.project5.ACSchapter8.shoppingclient.exception.UserNotFoundException;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.web.reactive.function.client.WebClient;
@@ -17,7 +18,7 @@ public class UserService {
             Mono<UserDTO> user = webClient.get().uri("/user/" + cpf + "/cpf/").retrieve().bodyToMono(UserDTO.class);
             return user.block();
         }catch(Exception e){
-            throw new RuntimeException("User not found");
+            throw new UserNotFoundException();
         }
     }
 }

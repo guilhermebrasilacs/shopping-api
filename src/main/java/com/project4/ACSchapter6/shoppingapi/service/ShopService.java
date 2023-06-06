@@ -6,6 +6,7 @@ import	java.util.List;
 import	java.util.Optional;
 import	java.util.stream.Collectors;
 
+import com.project4.ACSchapter6.shoppingapi.dto.DTOconverter;
 import com.project4.ACSchapter6.shoppingapi.dto.ShopReportDTO;
 import	lombok.RequiredArgsConstructor;
 
@@ -24,29 +25,29 @@ public class ShopService {
 
     public List<ShopDTO> getAll(){
         List<Shop> shops = shopRepository.findAll();
-        return shops.stream().map(ShopDTO::convert).collect(Collectors.toList());
+        return shops.stream().map(DTOconverter::convert).collect(Collectors.toList());
     }
 
     public List<ShopDTO> getByUser(String userIdentifier){
         List<Shop> shops = shopRepository.findAllByUserIdentifier(userIdentifier);
-        return shops.stream().map(ShopDTO::convert).collect(Collectors.toList());
+        return shops.stream().map(DTOconverter::convert).collect(Collectors.toList());
     }
 
     public List<ShopDTO> getByDate(ShopDTO shopDTO){
         List<Shop> shops = shopRepository.findAllByDateGreaterThan(shopDTO.getDate());
-        return shops.stream().map(ShopDTO::convert).collect(Collectors.toList());
+        return shops.stream().map(DTOconverter::convert).collect(Collectors.toList());
     }
 
 
     public List<ShopDTO> getShopsByFilters(LocalDate dataInicio, LocalDate dataFim, Float valorMinimo){
         List<Shop> shops = reportRepository.getShopsByFilters(dataInicio, dataFim, valorMinimo);
-        return shops.stream().map(ShopDTO::convert).collect(Collectors.toList());
+        return shops.stream().map(DTOconverter::convert).collect(Collectors.toList());
     }
 
     public ShopDTO findById(long productId){
         Optional<Shop> shop = shopRepository.findById(productId);
         if(shop.isPresent()){
-            return ShopDTO.convert(shop.get());
+            return DTOconverter.convert(shop.get());
         }
         return null;
     }
@@ -57,7 +58,7 @@ public class ShopService {
         shop.setDate(LocalDateTime.now());
 
         shop = shopRepository.save(shop);
-        return ShopDTO.convert(shop);
+        return DTOconverter.convert(shop);
     }
 
     public ShopReportDTO getReportByDate(LocalDate dataInicio, LocalDate dataFim){

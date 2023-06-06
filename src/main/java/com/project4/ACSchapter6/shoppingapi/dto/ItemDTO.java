@@ -20,11 +20,4 @@ public class ItemDTO {
     private String productIdentifier;
     @NotNull
     private Float price;
-
-    public static ItemDTO convert(Item item){
-        ItemDTO itemDTO = new ItemDTO();
-        itemDTO.setProductIdentifier(item.getProductIdentifier());
-        itemDTO.setPrice(item.getPrice());
-        return itemDTO;
-    }
 }

@@ -7,6 +7,7 @@ import org.springframework.web.reactive.function.client.WebClient;
 import com.project5.ACSchapter8.shoppingclient.dto.UserDTO;
 import reactor.core.publisher.Mono;
 
+@Service
 public class UserService {
     private String userApiURL = "http://localhost:8080";
 

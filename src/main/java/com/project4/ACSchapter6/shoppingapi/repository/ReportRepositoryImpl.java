@@ -6,6 +6,7 @@ import	jakarta.persistence.EntityManager;
 import	jakarta.persistence.PersistenceContext;
 import jakarta.persistence.Query;
 
+import java.math.BigInteger;
 import java.time.LocalDate;
 import java.util.List;
 
@@ -41,6 +42,22 @@ public class ReportRepositoryImpl implements ReportRepository {
 
     @Override
     public ShopReportDTO getReportByDate(LocalDate dataInicio, LocalDate dataFim) {
-        return null;
+        StringBuilder sb = new StringBuilder();
+        sb.append("select count(sp.id), sum(sp.total), avg(sp.total) ");
+        sb.append("from shopping.shop sp ");
+        sb.append("where sb.date >= :dataInicio ");
+        sb.append("and sp.date <= :dataFim ");
+
+        Query  query = entityManager.createNativeQuery(sb.toString());
+        query.setParameter("dataInicio", dataInicio.atTime(0,0));
+        query.setParameter("dataFim", dataFim.atTime(23,59));
+
+        Object[] result = (Object[]) query.getSingleResult();
+        ShopReportDTO shopReportDTO = new ShopReportDTO();
+        shopReportDTO.setCount(((BigInteger) result[0]).intValue());
+        shopReportDTO.setTotal((Double) result[1]);
+        shopReportDTO.setMean((Double) result[2]);
+
+        return shopReportDTO;
     }
 }

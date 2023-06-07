@@ -10,6 +10,7 @@ import com.project4.ACSchapter6.shoppingapi.dto.DTOconverter;
 import com.project4.ACSchapter6.shoppingapi.dto.ItemDTO;
 import com.project4.ACSchapter6.shoppingapi.dto.ShopReportDTO;
 import com.project5.ACSchapter8.shoppingclient.dto.ProductDTO;
+import com.project5.ACSchapter8.shoppingclient.dto.UserDTO;
 import	lombok.RequiredArgsConstructor;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -60,13 +61,9 @@ public class ShopService {
         return null;
     }
 
-    public ShopDTO save(ShopDTO shopDTO){
-        if(userService.getUserByCpf(shopDTO.getUserIdentifier()) == null){
-            return null;
-        }
-        if(!validateProducts(shopDTO.getItems())){
-            return null;
-        }
+    public ShopDTO save(ShopDTO shopDTO, String key){
+        UserDTO userDTO = userService.getUserByCpf(shopDTO.getUserIdentifier(), key);
+        validateProducts(shopDTO.getItems());
         shopDTO.setTotal(shopDTO.getItems().stream().map(x -> x.getPrice()).reduce((float) 0 , Float::sum));
         Shop shop = Shop.convert(shopDTO);
         shop.setDate(LocalDateTime.now());
